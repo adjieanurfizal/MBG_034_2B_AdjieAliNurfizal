@@ -11,8 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permintaans', function (Blueprint $table) {
+        Schema::create('permintaan', function (Blueprint $table) {
             $table->id();
+            // foreignId for user (pemohon)
+            $table->foreignId('pemohon_id')->constrained('users');
+            $table->date('tgl_masak');
+            $table->string('menu_makan');
+            $table->integer('jumlah_porsi');
+            $table->enum('status', ['menunggu', 'disetujui', 'ditolak'])->default('menunggu');
             $table->timestamps();
         });
     }

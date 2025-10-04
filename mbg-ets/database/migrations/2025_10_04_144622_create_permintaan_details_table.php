@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permintaan_details', function (Blueprint $table) {
+        Schema::create('permintaan_detail', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('permintaan_id')->constrained('permintaan')->onDelete('cascade');
+            $table->foreignId('bahan_id')->constrained('bahan_baku');
+            $table->integer('jumlah_diminta');
             $table->timestamps();
         });
     }
