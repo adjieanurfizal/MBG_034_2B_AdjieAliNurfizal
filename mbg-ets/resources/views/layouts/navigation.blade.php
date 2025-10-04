@@ -15,6 +15,24 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @if(auth()->user()->role == 'gudang')
+                        <x-nav-link :href="route('bahan-baku.index')" :active="request()->routeIs('bahan-baku.*')">
+                            {{ __('Bahan Baku') }}
+                        </x-nav-link>
+                        
+                        <x-nav-link :href="route('persetujuan.index')" :active="request()->routeIs('persetujuan.*')">
+                            {{ __('Persetujuan') }}
+                        </x-nav-link>
+                    @endif
+
+                    @if(auth()->user()->role == 'dapur')
+                        <x-nav-link :href="route('permintaan.create')" :active="request()->routeIs('permintaan.create')">
+                            {{ __('Buat Permintaan') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('permintaan.index')" :active="request()->routeIs('permintaan.index')">
+                            {{ __('Riwayat Permintaan') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 

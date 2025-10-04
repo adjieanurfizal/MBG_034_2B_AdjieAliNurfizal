@@ -53,6 +53,12 @@ class BahanBaku extends Model
             }
         );
     }
+
+    public function permintaanDetails()
+    {
+        // Relasi: Satu bahan baku bisa ada di banyak detail permintaan
+        return $this->hasMany(PermintaanDetail::class, 'bahan_id');
+    }
 }
 
 

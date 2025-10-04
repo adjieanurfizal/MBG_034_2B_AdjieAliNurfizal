@@ -97,13 +97,18 @@ class BahanBakuController extends Controller
      */
     public function destroy(BahanBaku $bahanBaku)
     {
-        // Aturan: Hanya boleh hapus jika statusnya 'kadaluarsa'
-        // Kita panggil accessor statusnya
-        if ($bahanBaku->status == 'kadaluarsa') {
-            $bahanBaku->delete();
-            return redirect()->route('bahan-baku.index')->with('success', 'Bahan baku kadaluarsa berhasil dihapus.');
+        // Cek pertama: Apakah bahan baku ini pernah direferensikan/diminta?
+        if ($bahanBaku->permintaanDetails()->count() > 0) {
+            return redirect()->route('bahan-baku.index')->with('error', 'Gagal! Bahan baku ini tidak bisa dihapus karena memiliki riwayat permintaan.');
         }
 
-        return redirect()->route('bahan-baku.index')->with('error', 'Hanya bahan baku yang sudah kadaluarsa yang boleh dihapus!');
+        // Cek kedua: (aturan dari soal) Hanya boleh hapus jika statusnya 'kadaluarsa'
+        // Sebenarnya aturan ini jadi kurang relevan jika sudah ada riwayat, tapi kita tetap simpan
+        if ($bahanBaku->status == 'kadaluarsa') {
+            $bahanBaku->delete();
+            return redirect()->route('bahan-baku.index')->with('success', 'Bahan baku berhasil dihapus.');
+        }
+
+        return redirect()->route('bahan-baku.index')->with('error', 'Hanya bahan baku yang belum pernah diminta yang boleh dihapus!');
     }
 }

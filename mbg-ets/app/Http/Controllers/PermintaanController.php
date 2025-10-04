@@ -15,7 +15,8 @@ class PermintaanController extends Controller
      */
     public function index()
     {
-        //
+        $permintaanSaya = Permintaan::where('pemohon_id', Auth::id())->latest()->get();
+        return view('permintaan.index', ['permintaanSaya' => $permintaanSaya]);
     }
 
     /**
@@ -76,7 +77,7 @@ class PermintaanController extends Controller
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage())->withInput();
         }
     }
-    
+
     /**
      * Display the specified resource.
      */

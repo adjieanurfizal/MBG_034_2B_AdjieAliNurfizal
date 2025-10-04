@@ -37,12 +37,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Grup Rute KHUSUS UNTUK ROLE GUDANG
+// Rute ROLE GUDANG
 Route::middleware(['auth', 'cekrole:gudang'])->group(function () {
     Route::resource('bahan-baku', BahanBakuController::class);
+    Route::get('/persetujuan', [PersetujuanController::class, 'index'])->name('persetujuan.index');
+    Route::get('/persetujuan/{id}', [PersetujuanController::class, 'show'])->name('persetujuan.show');
+    Route::post('/persetujuan/{id}', [PersetujuanController::class, 'proses'])->name('persetujuan.proses');
 });
 
-// Grup Rute KHUSUS UNTUK ROLE DAPUR
+// Rute ROLE DAPUR
 Route::middleware(['auth', 'cekrole:dapur'])->group(function () {
     Route::resource('permintaan', PermintaanController::class);
 });
