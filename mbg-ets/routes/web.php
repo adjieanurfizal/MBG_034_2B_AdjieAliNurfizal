@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\PermintaanController;
+use App\Http\Controllers\PersetujuanController;
 use Illuminate\Support\Facades\Route;
 
 /*
